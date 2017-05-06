@@ -22,6 +22,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HighScoreActivity"
+            android:label="@string/title_activity_high_score"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GameActivity"
+            android:label="@string/title_activity_game"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

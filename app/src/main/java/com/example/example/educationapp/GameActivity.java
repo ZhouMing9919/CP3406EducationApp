@@ -10,20 +10,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class SettingsActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_game);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.menu_game, menu);
         return true;
     }
 
@@ -33,10 +32,6 @@ public class SettingsActivity extends AppCompatActivity {
         if (id == R.id.action_home) {
             Intent homeViewIntent = new Intent(this, MainActivity.class);
             startActivity(homeViewIntent);
-            return true;
-        }else if (id == R.id.action_highScore){
-            Intent highScoreViewIntent = new Intent(this, HighScoreActivity.class);
-            startActivity(highScoreViewIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

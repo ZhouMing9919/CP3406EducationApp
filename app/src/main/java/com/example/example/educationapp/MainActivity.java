@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     void startGame(View view){
         //method launches the game when the start button is pressed
+        Intent gameViewIntent = new Intent(this, GameActivity.class);
+        startActivity(gameViewIntent);
 
     }
 
@@ -48,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(settingViewIntent);
             return true;
         }else if (id == R.id.action_highScore){
-            //Intent highScoreViewIntent = new Intent(this, SettingsActivity.class);
-            //startActivity(settingViewIntent);
+            Intent highScoreViewIntent = new Intent(this, HighScoreActivity.class);
+            startActivity(highScoreViewIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);
