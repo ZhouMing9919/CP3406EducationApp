@@ -9,4 +9,11 @@
     tools:context="com.example.example.educationapp.GameActivity"
     tools:showIn="@layout/activity_game">
 
+
+    <TextView
+        android:id="@+id/timeField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>
