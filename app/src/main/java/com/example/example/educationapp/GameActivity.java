@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
+    GameData _gameData;
     private TextView timeField;
     long clockTime = 10000;
     public CountDownTimer countDownTimer;
@@ -21,10 +22,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        _gameData = new GameData();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         timeField = (TextView) findViewById(R.id.timeField);
         createTimer();
+        System.out.println(_gameData.elementNamesList.get(3));
     }
 
     public void createTimer() {
@@ -39,7 +42,6 @@ public class GameActivity extends AppCompatActivity {
         }.start();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
