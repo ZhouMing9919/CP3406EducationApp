@@ -1,7 +1,6 @@
 package com.example.example.educationapp;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 //This is where the data needed to run the game will be created and stored

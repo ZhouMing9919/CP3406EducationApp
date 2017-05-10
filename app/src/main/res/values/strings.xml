@@ -12,4 +12,5 @@
     <string name="default_title_game_over">Default Title</string>
     <string name="default_message_game_over">Default Message</string>
     <string name="enter_name_game_over">Enter Name</string>
+    <string name="shake_notice">Shake Me!</string>
 </resources>
