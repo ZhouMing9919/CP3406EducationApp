@@ -30,6 +30,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     int randomIndex;
     long clockTime = 10000;
     public CountDownTimer countDownTimer;
+    float roundX, roundY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,19 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            if (answerInput.getText() != null){
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            roundX = Math.round(x);
+            roundY = Math.round(y);
+
+            if (answerInput.getText().toString().isEmpty()) {
+                shakeNotice.setTextColor(Color.GRAY);
+            }else {
                 shakeNotice.setTextColor(Color.RED);
-                checkAnswer();
+                if (roundY > 4){
+                    checkAnswer();
+                }
             }
         }
     }
@@ -98,11 +108,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    public void getElementName(){
+    public void getElementName() {
         randomIndex = 0;
         Random generator = new Random();
         randomIndex = generator.nextInt(7);
         elementName.setText(_gameData.elementNamesList.get(randomIndex));
+        System.out.println(randomIndex);
     }
 
     public void createTimer() {
@@ -119,12 +130,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void checkAnswer() {
-        if (answerInput.getText().toString().equals(_gameData.elementNamesList.get(randomIndex))){
+        System.out.println(randomIndex);
+        if (answerInput.getText().toString().trim().equals(_gameData.elementSymbolsList.get(randomIndex))) {
             Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
+            answerInput.getText().clear();
             ++_gameData.playerScore;
             getElementName();
-        }else {
+        } else {
             Toast.makeText(GameActivity.this, "Incorrect", Toast.LENGTH_SHORT).show();
+            answerInput.getText().clear();
             getElementName();
         }
     }
