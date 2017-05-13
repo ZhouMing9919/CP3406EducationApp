@@ -9,7 +9,7 @@
     <string name="title_activity_high_score">HighScoreActivity</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="quit_to_home">Quit to home</string>
-    <string name="default_title_game_over">Default Title</string>
+    <string name="default_title_game_over">Game Over</string>
     <string name="default_message_game_over">Default Message</string>
     <string name="enter_name_game_over">Enter Name</string>
     <string name="shake_notice">Shake Me!</string>

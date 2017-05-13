@@ -21,6 +21,7 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
     GameData _gameData;
+    SoundManager _soundManager;
     private TextView timeField;
     private TextView shakeNotice;
     private TextView elementName;
@@ -30,15 +31,23 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     int randomIndex;
     long clockTime = 10000;
     public CountDownTimer countDownTimer;
-    float roundX, roundY;
+    int buttonPressSound, correctSound, incorrectSound;
+    float aceValue, aceLast, shake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         _gameData = new GameData();
+        _soundManager = new SoundManager(this);
+
+        buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
+        correctSound = _soundManager.addSound(R.raw.correct_answer);
+        incorrectSound = _soundManager.addSound(R.raw.incorrect_answer);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         timeField = (TextView) findViewById(R.id.timeField);
         shakeNotice = (TextView) findViewById(R.id.shakeNotice);
         elementName = (TextView) findViewById(R.id.elementName);
@@ -46,28 +55,35 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         shakeNotice.setTextColor(Color.GRAY);
+
         createTimer();
         getElementName();
+
+        aceValue = SensorManager.GRAVITY_EARTH;
+        aceLast = SensorManager.GRAVITY_EARTH;
+        shake = 0.00f;
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Sensor mySensor = sensorEvent.sensor;
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            float x = sensorEvent.values[0];
-            float y = sensorEvent.values[1];
-            roundX = Math.round(x);
-            roundY = Math.round(y);
+        float x = sensorEvent.values[0];
+        float y = sensorEvent.values[1];
+        float z = sensorEvent.values[2];
 
-            if (answerInput.getText().toString().isEmpty()) {
-                shakeNotice.setTextColor(Color.GRAY);
-            }else {
-                shakeNotice.setTextColor(Color.RED);
-                if (roundY > 4){
-                    checkAnswer();
-                }
+        aceLast = aceValue;
+        aceValue = (float) Math.sqrt((double) (x * x + y * y + z * z));
+        float delta = aceValue - aceLast;
+        shake = shake * 0.9f + delta;
+
+        if (answerInput.getText().toString().isEmpty()) {
+            shakeNotice.setTextColor(Color.GRAY);
+        } else {
+            shakeNotice.setTextColor(Color.RED);
+            if (shake > 12) {
+                checkAnswer();
             }
         }
+
     }
 
     @Override
@@ -85,6 +101,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_home) {
+            _soundManager.play(buttonPressSound);
             Intent homeViewIntent = new Intent(this, MainActivity.class);
             startActivity(homeViewIntent);
             return true;
@@ -132,11 +149,13 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void checkAnswer() {
         System.out.println(randomIndex);
         if (answerInput.getText().toString().trim().equals(_gameData.elementSymbolsList.get(randomIndex))) {
+            _soundManager.play(correctSound);
             Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
             ++_gameData.playerScore;
             getElementName();
         } else {
+            _soundManager.play(incorrectSound);
             Toast.makeText(GameActivity.this, "Incorrect", Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
             getElementName();
@@ -144,3 +163,27 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
 }
+
+/*
+@Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            roundX = Math.round(x);
+            roundY = Math.round(y);
+
+            if (answerInput.getText().toString().isEmpty()) {
+                shakeNotice.setTextColor(Color.GRAY);
+            }else {
+                shakeNotice.setTextColor(Color.RED);
+                if (roundY > 4){
+                    checkAnswer();
+                }
+            }
+        }
+    }
+
+
+ */
