@@ -29,7 +29,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager mSensorManager;
     private Sensor mSensor;
     int randomIndex;
-    long clockTime = 10000;
     public CountDownTimer countDownTimer;
     int buttonPressSound, correctSound, incorrectSound;
     float aceValue, aceLast, shake;
@@ -38,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        _gameData = new GameData();
+        _gameData = (GameData) getIntent().getExtras().getSerializable("_gameData");
         _soundManager = new SoundManager(this);
 
         buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
@@ -103,6 +102,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (id == R.id.action_home) {
             _soundManager.play(buttonPressSound);
             Intent homeViewIntent = new Intent(this, MainActivity.class);
+            homeViewIntent.putExtra("_gameData", _gameData);
             startActivity(homeViewIntent);
             return true;
         }
@@ -134,7 +134,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void createTimer() {
-        countDownTimer = new CountDownTimer(clockTime, 1000) {
+        countDownTimer = new CountDownTimer(_gameData.clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
             }
@@ -163,27 +163,3 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
 }
-
-/*
-@Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        Sensor mySensor = sensorEvent.sensor;
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            float x = sensorEvent.values[0];
-            float y = sensorEvent.values[1];
-            roundX = Math.round(x);
-            roundY = Math.round(y);
-
-            if (answerInput.getText().toString().isEmpty()) {
-                shakeNotice.setTextColor(Color.GRAY);
-            }else {
-                shakeNotice.setTextColor(Color.RED);
-                if (roundY > 4){
-                    checkAnswer();
-                }
-            }
-        }
-    }
-
-
- */

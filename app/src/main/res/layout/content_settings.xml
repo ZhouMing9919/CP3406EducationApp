@@ -9,4 +9,22 @@
     tools:context="com.example.example.educationapp.SettingsActivity"
     tools:showIn="@layout/activity_settings">
 
+    <TextView
+        android:id="@+id/currentDifficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_difficulty" />
+
+    <Button
+        android:id="@+id/swapDifficultyEasy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="setEasyDifficulty" />
+
+    <Button
+        android:id="@+id/swapDifficultyHard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="setHardDifficulty" />
+
 </LinearLayout>
