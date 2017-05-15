@@ -10,20 +10,12 @@ class GameData implements Serializable{
     String[] elementSymbols = new String[]{"Na", "H", "He", "Ag", "Fe", "Ni", "Co"};
     ArrayList<String> elementNamesList;
     ArrayList<String> elementSymbolsList;
-    int playerScore;
-    long playerTime;
-    long clockTime;
-    boolean settingsChanged;
 
     GameData(){
         this.elementNamesList = new ArrayList<String>();
         Collections.addAll(elementNamesList, elementNames);
         this.elementSymbolsList = new ArrayList<String>();
         Collections.addAll(elementSymbolsList, elementSymbols);
-        this.playerScore = 0;
-        this.playerTime = 0;
-        this.clockTime = 20000;
-        this.settingsChanged = false;
     }
 }
 

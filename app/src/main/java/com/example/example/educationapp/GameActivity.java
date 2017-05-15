@@ -2,6 +2,7 @@ package com.example.example.educationapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -22,6 +23,10 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity implements SensorEventListener {
     GameData _gameData;
     SoundManager _soundManager;
+    GameOverDialog _gameOverDialog;
+    SharedPreferences sharedPreferences;
+    int playerScore = 0;
+    long clockTime;
     private TextView timeField;
     private TextView shakeNotice;
     private TextView elementName;
@@ -37,16 +42,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        _gameData = (GameData) getIntent().getExtras().getSerializable("_gameData");
+        _gameData = new GameData();
         _soundManager = new SoundManager(this);
-
+        _gameOverDialog = new GameOverDialog(this);
+        sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        clockTime = sharedPreferences.getLong("clockTime", 20000);
         buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
         correctSound = _soundManager.addSound(R.raw.correct_answer);
         incorrectSound = _soundManager.addSound(R.raw.incorrect_answer);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         timeField = (TextView) findViewById(R.id.timeField);
         shakeNotice = (TextView) findViewById(R.id.shakeNotice);
         elementName = (TextView) findViewById(R.id.elementName);
@@ -54,10 +59,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         shakeNotice.setTextColor(Color.GRAY);
-
         createTimer();
         getElementName();
-
         aceValue = SensorManager.GRAVITY_EARTH;
         aceLast = SensorManager.GRAVITY_EARTH;
         shake = 0.00f;
@@ -68,7 +71,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float x = sensorEvent.values[0];
         float y = sensorEvent.values[1];
         float z = sensorEvent.values[2];
-
         aceLast = aceValue;
         aceValue = (float) Math.sqrt((double) (x * x + y * y + z * z));
         float delta = aceValue - aceLast;
@@ -102,7 +104,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (id == R.id.action_home) {
             _soundManager.play(buttonPressSound);
             Intent homeViewIntent = new Intent(this, MainActivity.class);
-            homeViewIntent.putExtra("_gameData", _gameData);
             startActivity(homeViewIntent);
             return true;
         }
@@ -112,12 +113,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onStart() {
         super.onStart();
+        clockTime = sharedPreferences.getLong("clockTime", 20000);
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
         super.onPause();
         mSensorManager.unregisterListener(this);
+        saveGameInfo();
     }
 
     protected void onResume() {
@@ -134,12 +137,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void createTimer() {
-        countDownTimer = new CountDownTimer(_gameData.clockTime, 1000) {
+        countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
+                saveGameInfo();
+                _gameOverDialog.show();
                 timeField.setText("done!");
             }
         }.start();
@@ -152,7 +157,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             _soundManager.play(correctSound);
             Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
-            ++_gameData.playerScore;
+            ++playerScore;
             getElementName();
         } else {
             _soundManager.play(incorrectSound);
@@ -160,6 +165,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             answerInput.getText().clear();
             getElementName();
         }
+    }
+
+    public void saveGameInfo(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("playerScore", playerScore).apply();
     }
 
 }

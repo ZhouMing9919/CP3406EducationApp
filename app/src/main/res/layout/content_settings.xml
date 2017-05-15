@@ -19,12 +19,14 @@
         android:id="@+id/swapDifficultyEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="setEasyDifficulty" />
+        android:onClick="setEasyDifficulty"
+        android:text="@string/easy_mode_button" />
 
     <Button
         android:id="@+id/swapDifficultyHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="setHardDifficulty" />
+        android:onClick="setHardDifficulty"
+        android:text="@string/hard_mode_button" />
 
 </LinearLayout>

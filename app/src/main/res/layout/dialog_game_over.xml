@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/gameOverTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/default_title_game_over" />
+        android:gravity="center"
+        android:text="@string/default_title_game_over"
+        android:textSize="@dimen/title_text_size" />
 
     <TextView
         android:id="@+id/gameOverMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/default_message_game_over" />
 
     <EditText
         android:id="@+id/gameOverNameInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:gravity="center" />
 
     <Button
         android:id="@+id/gameOverInputButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/enter_name_game_over" />
 
 </LinearLayout>
