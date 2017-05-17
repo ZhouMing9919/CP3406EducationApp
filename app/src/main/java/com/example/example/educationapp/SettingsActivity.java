@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         currentDifficulty = (TextView) findViewById(R.id.currentDifficulty);
-
         swapDifficultyEasy = (Button) findViewById(R.id.swapDifficultyEasy);
         swapDifficultyHard = (Button) findViewById(R.id.swapDifficultyHard);
 

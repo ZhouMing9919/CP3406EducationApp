@@ -1,8 +1,11 @@
 package com.example.example.educationapp;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 
 public class GameOverDialog extends Dialog {
     SharedPreferences sharedPreferences;
+    private ScoresDAOHelper scoresDAO;
     private Context context;
     private TextView gameOverTitle;
     private TextView gameOverMessage;
@@ -38,7 +42,9 @@ public class GameOverDialog extends Dialog {
         sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         playerScore = sharedPreferences.getInt("playerScore", 0);
         currentGameDifficulty = sharedPreferences.getString("currentGameDifficulty", "Easy");
+        scoresDAO = new ScoresDAOHelper(context);
         setGameOverText();
+        updateScore();
         gameOverInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,8 +68,26 @@ public class GameOverDialog extends Dialog {
     }
 
     private void savePlayerInput(){
-        System.out.println(gameOverNameInput.getText());
+        SQLiteDatabase db = scoresDAO.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("_playerName", gameOverNameInput.getText().toString());
+        contentValues.put("_playerScore", playerScore);
+        contentValues.put("_playerDifficulty",currentGameDifficulty);
+        db.insert("_id", null, contentValues);
+        updateScore();
         this.dismiss();
+    }
+
+    private void updateScore() {
+        Cursor cursor = scoresDAO.getReadableDatabase().rawQuery("select * from _id", null);
+        StringBuilder builder = new StringBuilder();
+        builder.append("_id: ");
+        while (cursor.moveToNext()) {
+            System.out.println("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
+            builder.append(cursor.getString(1)).append(" ");
+        }
+        cursor.close();
+
     }
 
 }

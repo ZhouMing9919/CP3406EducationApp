@@ -13,8 +13,10 @@
     <string name="default_message_game_over">Default Message</string>
     <string name="enter_name_game_over">Enter Name</string>
     <string name="shake_notice">Shake Me!</string>
-    <string name="create_table">CREATE TABLE %1$s (_id INTEGER PRIMARY KEY, %2$s TEXT)</string>
+
+    <string name="create_table">CREATE TABLE %1$s (_id INTEGER PRIMARY KEY, %2$s _playerName TEXT, %3$s _playerScore INTEGER, %4$s _playerDifficulty TEXT)</string>
     <string name="delete_table">DROP TABLE IF TABLE EXISTS %1$s</string>
+
     <string name="default_difficulty">Current Difficulty: Easy</string>
     <string name="easy_mode_button">Easy Mode</string>
     <string name="hard_mode_button">Hard Mode</string>

@@ -16,7 +16,7 @@ public class ScoresDAOHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(context.getString(R.string.create_table, "scores", "value"));
+        db.execSQL(context.getString(R.string.create_table, "_id", "_playerName", "_playerScore", "_playerDifficulty"));
 
     }
 

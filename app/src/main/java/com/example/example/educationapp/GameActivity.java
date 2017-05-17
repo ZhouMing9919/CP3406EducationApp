@@ -140,6 +140,26 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                clockTime = millisUntilFinished;
+            }
+
+            public void onFinish() {
+                saveGameInfo();
+                _gameOverDialog.show();
+                timeField.setText("done!");
+            }
+
+
+        }.start();
+
+    }
+
+    public void updateTimer() {
+        countDownTimer.cancel();
+        countDownTimer = new CountDownTimer(clockTime, 1000) {
+            public void onTick(long millisUntilFinished) {
+                timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                clockTime = millisUntilFinished;
             }
 
             public void onFinish() {
@@ -148,7 +168,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 timeField.setText("done!");
             }
         }.start();
-
     }
 
     public void checkAnswer() {
@@ -158,16 +177,20 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
             ++playerScore;
+            clockTime = clockTime + 1000;
+            updateTimer();
             getElementName();
         } else {
             _soundManager.play(incorrectSound);
             Toast.makeText(GameActivity.this, "Incorrect", Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
+            clockTime = clockTime - 3000;
+            updateTimer();
             getElementName();
         }
     }
 
-    public void saveGameInfo(){
+    public void saveGameInfo() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("playerScore", playerScore).apply();
     }
