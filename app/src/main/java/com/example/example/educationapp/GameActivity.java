@@ -26,7 +26,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     GameOverDialog _gameOverDialog;
     SharedPreferences sharedPreferences;
     int playerScore = 0;
-    long clockTime;
+    long clockTime, clockReward, clockPenalty;
     private TextView timeField;
     private TextView shakeNotice;
     private TextView elementName;
@@ -47,6 +47,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         _gameOverDialog = new GameOverDialog(this);
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         clockTime = sharedPreferences.getLong("clockTime", 20000);
+        clockReward = sharedPreferences.getLong("clockReward", 3000);
+        clockPenalty = sharedPreferences.getLong("clockPenalty", 2000);
         buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
         correctSound = _soundManager.addSound(R.raw.correct_answer);
         incorrectSound = _soundManager.addSound(R.raw.incorrect_answer);
@@ -177,14 +179,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
             ++playerScore;
-            clockTime = clockTime + 1000;
+            clockTime = clockTime + clockReward;
             updateTimer();
             getElementName();
         } else {
             _soundManager.play(incorrectSound);
             Toast.makeText(GameActivity.this, "Incorrect", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GameActivity.this, "The correct answer was: " + _gameData.elementSymbolsList.get(randomIndex), Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
-            clockTime = clockTime - 3000;
+            clockTime = clockTime - clockPenalty;
             updateTimer();
             getElementName();
         }

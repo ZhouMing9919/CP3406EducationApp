@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         currentDifficulty = (TextView) findViewById(R.id.currentDifficulty);
         swapDifficultyEasy = (Button) findViewById(R.id.swapDifficultyEasy);
         swapDifficultyHard = (Button) findViewById(R.id.swapDifficultyHard);
+        currentDifficulty.setText("Current Difficulty: " + sharedPreferences.getString("currentGameDifficulty", "Easy"));
 
     }
 
@@ -37,14 +38,18 @@ public class SettingsActivity extends AppCompatActivity {
         currentDifficulty.setText("Current Difficulty: Hard");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong("clockTime", 10000).apply();
-        editor.putString("currentGameDifficulty", "Hard");
+        editor.putLong("clockReward", 1000).apply();
+        editor.putLong("clockPenalty", 3000).apply();
+        editor.putString("currentGameDifficulty", "Hard").apply();
     }
 
     public void setEasyDifficulty(View view){
         currentDifficulty.setText(R.string.default_difficulty);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong("clockTime", 20000).apply();
-        editor.putString("currentGameDifficulty", "Easy");
+        editor.putLong("clockReward", 3000).apply();
+        editor.putLong("clockPenalty", 2000).apply();
+        editor.putString("currentGameDifficulty", "Easy").apply();
     }
 
     @Override

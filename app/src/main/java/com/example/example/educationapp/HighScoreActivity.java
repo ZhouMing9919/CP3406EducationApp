@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class HighScoreActivity extends AppCompatActivity {
     private ScoresDAOHelper scoresDAO;
     private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> scoresArrayList;
     public ListView listView;
 
     @Override
@@ -29,9 +28,8 @@ public class HighScoreActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         scoresDAO = new ScoresDAOHelper(this);
-        scoresArrayList = new ArrayList<String>();
+        createArrayAdapter();
         updateScore();
-        populateListView();
     }
 
     @Override
@@ -55,8 +53,8 @@ public class HighScoreActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void populateListView() {
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.players_data, scoresArrayList);
+    public void createArrayAdapter() {
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.players_data);
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(arrayAdapter);
     }
@@ -68,7 +66,7 @@ public class HighScoreActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             //System.out.println("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
             builder.append(cursor.getString(1)).append(" ");
-            scoresArrayList.add("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
+            arrayAdapter.add("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
         }
         cursor.close();
 
