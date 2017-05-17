@@ -9,4 +9,13 @@
     tools:context="com.example.example.educationapp.HighScoreActivity"
     tools:showIn="@layout/activity_high_score">
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/DefaultPadding">
+
+
+    </ListView>
+
 </LinearLayout>
