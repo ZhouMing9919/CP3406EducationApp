@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private TextView shakeNotice;
     private TextView elementName;
     private EditText answerInput;
+    private TextView gameOutput;
     private SensorManager mSensorManager;
     private Sensor mSensor;
     int randomIndex;
@@ -57,8 +58,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         shakeNotice = (TextView) findViewById(R.id.shakeNotice);
         elementName = (TextView) findViewById(R.id.elementName);
         answerInput = (EditText) findViewById(R.id.answerInput);
+        gameOutput = (TextView) findViewById(R.id.gameOutput);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        timeField.setTextColor(Color.GREEN);
         shakeNotice.setTextColor(Color.GRAY);
         playerScoreField.setText("Score: " + playerScore);
         createTimer();
@@ -121,8 +124,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void getElementName() {
         randomIndex = 0;
         Random generator = new Random();
-        randomIndex = generator.nextInt(7);
-        elementName.setText(_gameData.elementNamesList.get(randomIndex));
+        randomIndex = generator.nextInt(118);
+        elementName.setText("Your element: " + _gameData.elementNamesList.get(randomIndex));
         System.out.println(randomIndex);
     }
 
@@ -130,6 +133,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                if (millisUntilFinished < 5000){
+                    timeField.setTextColor(Color.RED);
+                }
                 clockTime = millisUntilFinished;
             }
 
@@ -149,6 +155,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                if (millisUntilFinished < 5000){
+                    timeField.setTextColor(Color.RED);
+                }
                 clockTime = millisUntilFinished;
             }
 

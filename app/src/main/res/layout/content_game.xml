@@ -4,48 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_yellow"
+    android:background="@drawable/background_light"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.example.educationapp.GameActivity"
     tools:showIn="@layout/activity_game">
 
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/timeField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:padding="@dimen/DefaultPadding"
+        android:textSize="@dimen/large_title_text" />
 
-        <TextView
-            android:id="@+id/playerScoreField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/elementName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/DefaultPadding"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/large_title_text" />
 
-        <TextView
-            android:id="@+id/timeField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/playerScoreField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/DefaultPadding"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/medium_text_size" />
 
     <TextView
         android:id="@+id/shakeNotice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/shake_notice" />
-
-    <TextView
-
-        android:id="@+id/elementName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:gravity="center"
+        android:padding="@dimen/DefaultPadding"
+        android:text="@string/shake_notice"
+        android:textSize="@dimen/large_title_text" />
 
 
     <EditText
         android:id="@+id/answerInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:inputType="text"
+        android:padding="@dimen/DefaultPadding" />
+
+    <TextView
+
+        android:id="@+id/gameOutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/DefaultPadding"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/medium_text_size" />
 
 
 </LinearLayout>

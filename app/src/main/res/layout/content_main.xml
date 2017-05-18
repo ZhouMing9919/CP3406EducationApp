@@ -4,42 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_light"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.example.educationapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:background="@drawable/game_title"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2" />
+        android:background="@drawable/game_title" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/start_button"
-        android:onClick="startGame"
         android:layout_above="@+id/button4"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/start_button"
+        android:onClick="startGame" />
 
-   <Button
-       android:layout_width="match_parent"
-       android:background="@drawable/how_to_play"
-       android:onClick="howToPlay"
-       android:layout_height="wrap_content"
-       android:layout_above="@+id/button3"
-       android:layout_alignParentStart="true"
-       android:id="@+id/button4" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button3"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/how_to_play"
+        android:onClick="howToPlay" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/quit_button"
-        android:onClick="quitGame"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/quit_button"
+        android:onClick="quitGame" />
 
 </RelativeLayout>
