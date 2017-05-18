@@ -32,26 +32,6 @@ public class HighScoreActivity extends AppCompatActivity {
         updateScore();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_high_score, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_home) {
-            Intent homeViewIntent = new Intent(this, MainActivity.class);
-            startActivity(homeViewIntent);
-            return true;
-        } else if (id == R.id.action_settings) {
-            Intent settingsViewIntent = new Intent(this, SettingsActivity.class);
-            startActivity(settingsViewIntent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void createArrayAdapter() {
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.players_data);
@@ -66,7 +46,7 @@ public class HighScoreActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             //System.out.println("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
             builder.append(cursor.getString(1)).append(" ");
-            arrayAdapter.add("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
+            arrayAdapter.add("Player Name: " + cursor.getString(1) + " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
         }
         cursor.close();
 

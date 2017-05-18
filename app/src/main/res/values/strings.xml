@@ -20,4 +20,7 @@
     <string name="default_difficulty">Current Difficulty: Easy</string>
     <string name="easy_mode_button">Easy Mode</string>
     <string name="hard_mode_button">Hard Mode</string>
+    <string name="quit_current_game">Quit Current Game?</string>
+    <string name="cancel">Cancel</string>
+    <string name="quit_current_game_text">Quit</string>
 </resources>

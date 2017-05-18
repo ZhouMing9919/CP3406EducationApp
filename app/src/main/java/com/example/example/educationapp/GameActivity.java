@@ -1,7 +1,6 @@
 package com.example.example.educationapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -12,8 +11,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +25,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     int playerScore = 0;
     long clockTime, clockReward, clockPenalty;
     private TextView timeField;
+    private TextView playerScoreField;
     private TextView shakeNotice;
     private TextView elementName;
     private EditText answerInput;
@@ -55,12 +53,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         timeField = (TextView) findViewById(R.id.timeField);
+        playerScoreField = (TextView) findViewById(R.id.playerScoreField);
         shakeNotice = (TextView) findViewById(R.id.shakeNotice);
         elementName = (TextView) findViewById(R.id.elementName);
         answerInput = (EditText) findViewById(R.id.answerInput);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         shakeNotice.setTextColor(Color.GRAY);
+        playerScoreField.setText("Score: " + playerScore);
         createTimer();
         getElementName();
         aceValue = SensorManager.GRAVITY_EARTH;
@@ -95,38 +95,26 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_game, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_home) {
-            _soundManager.play(buttonPressSound);
-            Intent homeViewIntent = new Intent(this, MainActivity.class);
-            startActivity(homeViewIntent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         clockTime = sharedPreferences.getLong("clockTime", 20000);
+        playerScore = 0;
+        playerScoreField.setText("Score: " + playerScore);
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
         super.onPause();
+        countDownTimer.cancel();
         mSensorManager.unregisterListener(this);
         saveGameInfo();
     }
 
     protected void onResume() {
         super.onResume();
+        playerScore = 0;
+        playerScoreField.setText("Score: " + playerScore);
+        countDownTimer.start();
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
@@ -198,4 +186,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         editor.putInt("playerScore", playerScore).apply();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        countDownTimer.cancel();
+        mSensorManager.unregisterListener(this);
+    }
 }

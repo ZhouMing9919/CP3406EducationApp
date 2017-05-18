@@ -34,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    public void setHardDifficulty(View view){
+    public void setHardDifficulty(View view) {
         currentDifficulty.setText("Current Difficulty: Hard");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong("clockTime", 10000).apply();
@@ -43,34 +43,13 @@ public class SettingsActivity extends AppCompatActivity {
         editor.putString("currentGameDifficulty", "Hard").apply();
     }
 
-    public void setEasyDifficulty(View view){
+    public void setEasyDifficulty(View view) {
         currentDifficulty.setText(R.string.default_difficulty);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong("clockTime", 20000).apply();
         editor.putLong("clockReward", 3000).apply();
         editor.putLong("clockPenalty", 2000).apply();
         editor.putString("currentGameDifficulty", "Easy").apply();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_home) {
-            Intent homeViewIntent = new Intent(this, MainActivity.class);
-            startActivity(homeViewIntent);
-            return true;
-        }else if (id == R.id.action_highScore){
-            Intent highScoreViewIntent = new Intent(this, HighScoreActivity.class);
-            startActivity(highScoreViewIntent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }
