@@ -82,7 +82,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             shakeNotice.setTextColor(Color.GRAY);
         } else {
             shakeNotice.setTextColor(Color.RED);
-            if (shake > 12) {
+            if (shake > 4) {
                 checkAnswer();
             }
         }

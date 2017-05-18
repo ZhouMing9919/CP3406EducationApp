@@ -2,19 +2,15 @@ package com.example.example.educationapp;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 
 public class HighScoreActivity extends AppCompatActivity {
     private ScoresDAOHelper scoresDAO;
@@ -30,6 +26,23 @@ public class HighScoreActivity extends AppCompatActivity {
         scoresDAO = new ScoresDAOHelper(this);
         createArrayAdapter();
         updateScore();
+        shareScore();
+    }
+
+    private void shareScore() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = arrayAdapter.getItem(position);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+            }
+        });
+
     }
 
 
@@ -46,10 +59,9 @@ public class HighScoreActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             //System.out.println("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
             builder.append(cursor.getString(1)).append(" ");
-            arrayAdapter.add("Player Name: " + cursor.getString(1) + " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
+            arrayAdapter.add(cursor.getString(1) + " got a score of: " + cursor.getString(2) + " while playing on : " + cursor.getString(3) + " mode");
         }
         cursor.close();
 
     }
-
 }

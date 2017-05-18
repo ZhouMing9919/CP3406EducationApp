@@ -12,4 +12,5 @@
         android:orderInCategory="100"
         android:title="@string/high_score"
         app:showAsAction="never" />
+
 </menu>
