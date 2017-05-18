@@ -86,7 +86,6 @@ public class GameOverDialog extends Dialog {
         StringBuilder builder = new StringBuilder();
         builder.append("_id: ");
         while (cursor.moveToNext()) {
-            //System.out.println("Player Name: " + cursor.getString(1) + " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
             builder.append(cursor.getString(1)).append(" ");
         }
         cursor.close();

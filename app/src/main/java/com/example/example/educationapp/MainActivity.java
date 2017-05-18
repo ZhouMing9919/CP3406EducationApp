@@ -38,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void howToPlay(View view){
+        _soundManager.play(buttonPressSound);
+        Intent htpViewIntent = new Intent(this, HtpActivity.class);
+        startActivity(htpViewIntent);
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -60,4 +67,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
