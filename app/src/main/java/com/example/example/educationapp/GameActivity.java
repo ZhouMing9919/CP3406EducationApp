@@ -167,6 +167,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
             answerInput.getText().clear();
             ++playerScore;
+            playerScoreField.setText("Score: " + playerScore);
             clockTime = clockTime + clockReward;
             updateTimer();
             getElementName();

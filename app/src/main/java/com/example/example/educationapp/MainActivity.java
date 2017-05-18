@@ -18,12 +18,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //prepareGameData();
         _soundManager = new SoundManager(this);
         buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
     }
 
-    public void startGame(View view){
+    public void startGame(View view) {
         //method launches the game when the start button is pressed
         _soundManager.play(buttonPressSound);
         Intent gameViewIntent = new Intent(this, GameActivity.class);
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void quitGame(View view){
+    public void quitGame(View view) {
         //method closes app and saves data when the quit button is pressed
         _soundManager.play(buttonPressSound);
         finishAffinity();
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             Intent settingViewIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingViewIntent);
             return true;
-        }else if (id == R.id.action_highScore){
+        } else if (id == R.id.action_highScore) {
             _soundManager.play(buttonPressSound);
             Intent highScoreViewIntent = new Intent(this, HighScoreActivity.class);
             startActivity(highScoreViewIntent);

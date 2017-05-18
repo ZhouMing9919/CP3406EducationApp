@@ -78,6 +78,7 @@ public class GameOverDialog extends Dialog {
         db.insert("_id", null, contentValues);
         updateScore();
         this.dismiss();
+        ((GameActivity)context).finish();
     }
 
     private void updateScore() {
