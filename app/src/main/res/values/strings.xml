@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Education App</string>
+    <string name="app_name">Awesome Elements</string>
     <string name="settings">Settings</string>
     <string name="high_score">High Score</string>
     <string name="start">Start</string>
     <string name="quit">Quit</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="home">home</string>
-    <string name="title_activity_high_score">HighScoreActivity</string>
-    <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_high_score">High Scores</string>
+    <string name="title_activity_game">Game</string>
     <string name="quit_to_home">Quit to home</string>
     <string name="default_title_game_over">Game Over</string>
     <string name="default_message_game_over">Default Message</string>
@@ -22,11 +22,11 @@
     <string name="quit_current_game">Quit Current Game?</string>
     <string name="cancel">Cancel</string>
     <string name="quit_current_game_text">Quit</string>
-    <string name="title_activity_htp">HtpActivity</string>
+    <string name="title_activity_htp">How To Play</string>
     <string name="how_to_play">How To Play</string>
     <string name="step_1">1) When the game starts you will be given the name of an element on the periodic table. You must then enter the symbol of the element in the text area provided</string>
     <string name="step_2">2) Then when the Shake Me! text turns red you can the shake your device to check if your answer was correct</string>
-    <string name="title_activity_view_table">ViewTableActivity</string>
+    <string name="title_activity_view_table">View Periodic Table</string>
     <string name="view_periodic_table">View Periodic Table</string>
     <string name="high_scores">High Scores</string>
     <string name="periodic_table">Image of the periodic table of elements</string>
