@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void howToPlay(View view){
+    public void howToPlay(View view) {
         _soundManager.play(buttonPressSound);
         Intent htpViewIntent = new Intent(this, HtpActivity.class);
         startActivity(htpViewIntent);
@@ -64,8 +64,12 @@ public class MainActivity extends AppCompatActivity {
             Intent highScoreViewIntent = new Intent(this, HighScoreActivity.class);
             startActivity(highScoreViewIntent);
             return true;
+        } else if (id == R.id.action_ViewTable) {
+            _soundManager.play(buttonPressSound);
+            Intent ViewTableViewIntent = new Intent(this, ViewTableActivity.class);
+            startActivity(ViewTableViewIntent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

@@ -12,5 +12,10 @@
         android:orderInCategory="100"
         android:title="@string/high_score"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_ViewTable"
+        android:orderInCategory="100"
+        android:title="@string/view_periodic_table"
+        app:showAsAction="never" />
 
 </menu>

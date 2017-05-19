@@ -30,7 +30,14 @@
         android:id="@+id/gameOverInputButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/write_name_small"
+        android:background="@drawable/write_name"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/cancelNameDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cancel_name"
         android:gravity="center" />
 
 </LinearLayout>

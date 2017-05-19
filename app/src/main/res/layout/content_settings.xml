@@ -14,20 +14,26 @@
         android:id="@+id/currentDifficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/default_difficulty" />
+        android:gravity="center"
+        android:padding="@dimen/DefaultPadding"
+        android:text="@string/default_difficulty"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/large_title_text" />
 
     <Button
         android:id="@+id/swapDifficultyEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/easy_mode"
-        android:onClick="setEasyDifficulty" />
+        android:onClick="setEasyDifficulty"
+        android:padding="@dimen/DefaultPadding" />
 
     <Button
         android:id="@+id/swapDifficultyHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/hard_mode"
-        android:onClick="setHardDifficulty" />
+        android:onClick="setHardDifficulty"
+        android:padding="@dimen/DefaultPadding" />
 
 </LinearLayout>

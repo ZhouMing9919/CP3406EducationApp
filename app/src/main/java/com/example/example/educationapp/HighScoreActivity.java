@@ -2,6 +2,7 @@ package com.example.example.educationapp;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -59,9 +60,19 @@ public class HighScoreActivity extends AppCompatActivity {
         while (cursor.moveToNext()) {
             //System.out.println("Player Name: " + cursor.getString(1)+ " Player Score: " + cursor.getString(2) + " Difficulty Completed: " + cursor.getString(3));
             builder.append(cursor.getString(1)).append(" ");
-            arrayAdapter.add(cursor.getString(1) + " got a score of: " + cursor.getString(2) + " while playing on : " + cursor.getString(3) + " mode");
+            try {
+                arrayAdapter.add(cursor.getString(1) + " got a score of: " + cursor.getString(2) + " while playing on : " + cursor.getString(3) + " mode");
+            }catch (Exception ignored){}
         }
         cursor.close();
 
+    }
+
+    public void clearScores(View view){
+        SQLiteDatabase db = scoresDAO.getWritableDatabase();
+        db.delete("_id", null, null);
+        arrayAdapter.notifyDataSetChanged();
+        updateScore();
+        finish();
     }
 }

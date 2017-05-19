@@ -41,7 +41,13 @@
         <activity
             android:name=".HtpActivity"
             android:label="@string/title_activity_htp"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewTableActivity"
+            android:label="@string/title_activity_view_table"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

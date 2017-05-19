@@ -26,4 +26,10 @@
     <string name="cancel">Cancel</string>
     <string name="quit_current_game_text">Quit</string>
     <string name="title_activity_htp">HtpActivity</string>
+    <string name="how_to_play">How To Play</string>
+    <string name="step_1">1) When the game starts you will be given the name of an element on the periodic table. You must then enter the symbol of the element in the text area provided</string>
+    <string name="step_2">2) Then when the Shake Me! text turns red you can the shake your device to check if your answer was correct</string>
+    <string name="title_activity_view_table">ViewTableActivity</string>
+    <string name="view_periodic_table">View Periodic Table</string>
+    <string name="high_scores">High Scores</string>
 </resources>

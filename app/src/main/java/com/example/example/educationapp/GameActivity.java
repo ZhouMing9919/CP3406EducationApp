@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     int randomIndex;
     public CountDownTimer countDownTimer;
     int buttonPressSound, correctSound, incorrectSound;
-    float aceValue, aceLast, shake;
+    float acceleratorValue, acceleratorLast, shakeAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +66,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         playerScoreField.setText("Score: " + playerScore);
         createTimer();
         getElementName();
-        aceValue = SensorManager.GRAVITY_EARTH;
-        aceLast = SensorManager.GRAVITY_EARTH;
-        shake = 0.00f;
+        acceleratorValue = SensorManager.GRAVITY_EARTH;
+        acceleratorLast = SensorManager.GRAVITY_EARTH;
+        shakeAmount = 0.00f;
     }
 
     @Override
@@ -76,16 +76,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float x = sensorEvent.values[0];
         float y = sensorEvent.values[1];
         float z = sensorEvent.values[2];
-        aceLast = aceValue;
-        aceValue = (float) Math.sqrt((double) (x * x + y * y + z * z));
-        float delta = aceValue - aceLast;
-        shake = shake * 0.9f + delta;
+        acceleratorLast = acceleratorValue;
+        acceleratorValue = (float) Math.sqrt((double) (x * x + y * y + z * z));
+        float delta = acceleratorValue - acceleratorLast;
+        shakeAmount = shakeAmount * 0.9f + delta;
 
         if (answerInput.getText().toString().isEmpty()) {
             shakeNotice.setTextColor(Color.GRAY);
         } else {
             shakeNotice.setTextColor(Color.RED);
-            if (shake > 4) {
+            if (shakeAmount > 4) {
                 checkAnswer();
             }
         }
@@ -132,7 +132,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void createTimer() {
         countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
-                timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                timeField.setText("Seconds Remaining: " + millisUntilFinished / 1000);
                 if (millisUntilFinished < 5000){
                     timeField.setTextColor(Color.RED);
                 }
@@ -154,7 +154,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         countDownTimer.cancel();
         countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
-                timeField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                timeField.setText("Seconds Remaining: " + millisUntilFinished / 1000);
                 if (millisUntilFinished < 5000){
                     timeField.setTextColor(Color.RED);
                 }
@@ -173,7 +173,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         System.out.println(randomIndex);
         if (answerInput.getText().toString().trim().equals(_gameData.elementSymbolsList.get(randomIndex))) {
             _soundManager.play(correctSound);
-            Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
+            gameOutput.setText("Correct!");
+            gameOutput.setTextColor(Color.GREEN);
             answerInput.getText().clear();
             ++playerScore;
             playerScoreField.setText("Score: " + playerScore);
@@ -182,8 +183,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             getElementName();
         } else {
             _soundManager.play(incorrectSound);
-            Toast.makeText(GameActivity.this, "Incorrect", Toast.LENGTH_SHORT).show();
-            Toast.makeText(GameActivity.this, "The correct answer was: " + _gameData.elementSymbolsList.get(randomIndex), Toast.LENGTH_SHORT).show();
+            gameOutput.setText("Incorrect \n The correct answer was: " + _gameData.elementSymbolsList.get(randomIndex));
+            gameOutput.setTextColor(Color.RED);
             answerInput.getText().clear();
             clockTime = clockTime - clockPenalty;
             updateTimer();

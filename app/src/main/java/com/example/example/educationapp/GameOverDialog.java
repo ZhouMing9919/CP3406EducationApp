@@ -24,6 +24,7 @@ public class GameOverDialog extends Dialog {
     private TextView gameOverMessage;
     private EditText gameOverNameInput;
     private Button gameOverInputButton;
+    private Button cancelNameDialog;
     int playerScore;
     String currentGameDifficulty;
 
@@ -41,18 +42,31 @@ public class GameOverDialog extends Dialog {
         gameOverMessage = (TextView) findViewById(R.id.gameOverMessage);
         gameOverNameInput = (EditText) findViewById(R.id.gameOverNameInput);
         gameOverInputButton = (Button) findViewById(R.id.gameOverInputButton);
+        cancelNameDialog = (Button) findViewById(R.id.cancelNameDialog);
         sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         playerScore = sharedPreferences.getInt("playerScore", 0);
         currentGameDifficulty = sharedPreferences.getString("currentGameDifficulty", "Easy");
         scoresDAO = new ScoresDAOHelper(context);
         setGameOverText();
         updateScore();
+
         gameOverInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savePlayerInput();
+                if (!gameOverNameInput.getText().toString().equals(" ") && !gameOverNameInput.getText().toString().isEmpty()) {
+                    savePlayerInput();
+                }
             }
         });
+
+        cancelNameDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelPlayerInput();
+            }
+        });
+
+
     }
 
     private void setGameOverText() {
@@ -78,7 +92,12 @@ public class GameOverDialog extends Dialog {
         db.insert("_id", null, contentValues);
         updateScore();
         this.dismiss();
-        ((GameActivity)context).finish();
+        ((GameActivity) context).finish();
+    }
+
+    private void cancelPlayerInput() {
+        this.dismiss();
+        ((GameActivity) context).finish();
     }
 
     private void updateScore() {
