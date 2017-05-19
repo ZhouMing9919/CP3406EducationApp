@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         _gameData = new GameData();
         _soundManager = new SoundManager(this);
         _gameOverDialog = new GameOverDialog(this);
@@ -51,8 +57,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
         correctSound = _soundManager.addSound(R.raw.correct_answer);
         incorrectSound = _soundManager.addSound(R.raw.incorrect_answer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         timeField = (TextView) findViewById(R.id.timeField);
         playerScoreField = (TextView) findViewById(R.id.playerScoreField);
         shakeNotice = (TextView) findViewById(R.id.shakeNotice);
@@ -61,7 +65,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         gameOutput = (TextView) findViewById(R.id.gameOutput);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        timeField.setTextColor(Color.GREEN);
         shakeNotice.setTextColor(Color.GRAY);
         playerScoreField.setText("Score: " + playerScore);
         createTimer();
