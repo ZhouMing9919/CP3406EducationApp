@@ -14,11 +14,8 @@
     <string name="enter_name_game_over">Enter Name</string>
     <string name="shake_notice">Shake Me!</string>
     <string name="game_background">R.drawable.background</string>
-
-
     <string name="create_table">CREATE TABLE %1$s (_id INTEGER PRIMARY KEY, %2$s _playerName TEXT, %3$s _playerScore INTEGER, %4$s _playerDifficulty TEXT)</string>
     <string name="delete_table">DROP TABLE IF TABLE EXISTS %1$s</string>
-
     <string name="default_difficulty">Current Difficulty: Easy</string>
     <string name="easy_mode_button">Easy Mode</string>
     <string name="hard_mode_button">Hard Mode</string>
@@ -32,4 +29,6 @@
     <string name="title_activity_view_table">ViewTableActivity</string>
     <string name="view_periodic_table">View Periodic Table</string>
     <string name="high_scores">High Scores</string>
+    <string name="periodic_table">Image of the periodic table of elements</string>
+    <string name="how_to_play_diagram">How to play diagram</string>
 </resources>

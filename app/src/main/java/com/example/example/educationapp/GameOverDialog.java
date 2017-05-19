@@ -13,22 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 
-
-public class GameOverDialog extends Dialog {
-    SharedPreferences sharedPreferences;
+class GameOverDialog extends Dialog {
+    private SoundManager _soundManager;
+    private SharedPreferences sharedPreferences;
     private ScoresDAOHelper scoresDAO;
     private Context context;
-    private TextView gameOverTitle;
     private TextView gameOverMessage;
     private EditText gameOverNameInput;
     private Button gameOverInputButton;
     private Button cancelNameDialog;
-    int playerScore;
-    String currentGameDifficulty;
+    private int playerScore;
+    private String currentGameDifficulty;
+    private int buttonPressSound;
 
-    public GameOverDialog(Context context) {
+    GameOverDialog(Context context) {
         super(context);
         this.context = context;
         this.setCancelable(false);
@@ -38,7 +37,6 @@ public class GameOverDialog extends Dialog {
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_game_over);
-        gameOverTitle = (TextView) findViewById(R.id.gameOverTitle);
         gameOverMessage = (TextView) findViewById(R.id.gameOverMessage);
         gameOverNameInput = (EditText) findViewById(R.id.gameOverNameInput);
         gameOverInputButton = (Button) findViewById(R.id.gameOverInputButton);
@@ -47,6 +45,8 @@ public class GameOverDialog extends Dialog {
         playerScore = sharedPreferences.getInt("playerScore", 0);
         currentGameDifficulty = sharedPreferences.getString("currentGameDifficulty", "Easy");
         scoresDAO = new ScoresDAOHelper(context);
+        _soundManager = new SoundManager(context);
+        buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
         setGameOverText();
         updateScore();
 
@@ -70,6 +70,7 @@ public class GameOverDialog extends Dialog {
     }
 
     private void setGameOverText() {
+        //this method determines the type of text that will be displayed based on the players score
         if (playerScore == 0) {
             gameOverMessage.setText("Try harder next time");
         } else if (playerScore <= 5) {
@@ -84,6 +85,8 @@ public class GameOverDialog extends Dialog {
     }
 
     private void savePlayerInput() {
+        //this method saves the players name when the button is pressed and adds the data to the database
+        _soundManager.play(buttonPressSound);
         SQLiteDatabase db = scoresDAO.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("_playerName", gameOverNameInput.getText().toString());
@@ -96,11 +99,14 @@ public class GameOverDialog extends Dialog {
     }
 
     private void cancelPlayerInput() {
+        //this method cancels the player name input
+        _soundManager.play(buttonPressSound);
         this.dismiss();
         ((GameActivity) context).finish();
     }
 
     private void updateScore() {
+        //this method updates the database
         Cursor cursor = scoresDAO.getReadableDatabase().rawQuery("select * from _id", null);
         StringBuilder builder = new StringBuilder();
         builder.append("_id: ");

@@ -11,11 +11,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
@@ -109,6 +107,20 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        countDownTimer.cancel();
+        mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+        mSensorManager.unregisterListener(this);
+    }
+
     protected void onPause() {
         super.onPause();
         countDownTimer.cancel();
@@ -125,6 +137,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void getElementName() {
+        //this is the method that selects the ellement pairs for use in the game
         randomIndex = 0;
         Random generator = new Random();
         randomIndex = generator.nextInt(118);
@@ -133,10 +146,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void createTimer() {
+        //this method is for creating and starting the timer
         countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeField.setText("Seconds Remaining: " + millisUntilFinished / 1000);
-                if (millisUntilFinished < 5000){
+                if (millisUntilFinished < 5000) {
                     timeField.setTextColor(Color.RED);
                 }
                 clockTime = millisUntilFinished;
@@ -154,11 +168,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void updateTimer() {
+        //this method is used for updating and restarting the timer when time is added to it
         countDownTimer.cancel();
         countDownTimer = new CountDownTimer(clockTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeField.setText("Seconds Remaining: " + millisUntilFinished / 1000);
-                if (millisUntilFinished < 5000){
+                if (millisUntilFinished < 5000) {
                     timeField.setTextColor(Color.RED);
                 }
                 clockTime = millisUntilFinished;
@@ -173,6 +188,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void checkAnswer() {
+        //this method is used to check the players answer to the question
         System.out.println(randomIndex);
         if (answerInput.getText().toString().trim().equals(_gameData.elementSymbolsList.get(randomIndex))) {
             _soundManager.play(correctSound);
@@ -198,12 +214,5 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     public void saveGameInfo() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("playerScore", playerScore).apply();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        countDownTimer.cancel();
-        mSensorManager.unregisterListener(this);
     }
 }

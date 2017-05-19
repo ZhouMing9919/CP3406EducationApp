@@ -1,25 +1,19 @@
 package com.example.example.educationapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
+    SoundManager _soundManager;
+    int buttonPressSound;
     SharedPreferences sharedPreferences;
     private TextView currentDifficulty;
-    private Button swapDifficultyEasy;
-    private Button swapDifficultyHard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +25,21 @@ public class SettingsActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         currentDifficulty = (TextView) findViewById(R.id.currentDifficulty);
-        swapDifficultyEasy = (Button) findViewById(R.id.swapDifficultyEasy);
-        swapDifficultyHard = (Button) findViewById(R.id.swapDifficultyHard);
         currentDifficulty.setText("Current Difficulty: " + sharedPreferences.getString("currentGameDifficulty", "Easy"));
+        _soundManager = new SoundManager(this);
+        buttonPressSound = _soundManager.addSound(R.raw.button_pressed);
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     public void setHardDifficulty(View view) {
+        //this method sets the difficulty shared prefrences to hard
+        _soundManager.play(buttonPressSound);
         currentDifficulty.setText("Current Difficulty: Hard");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong("clockTime", 10000).apply();
@@ -47,6 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void setEasyDifficulty(View view) {
+        //this method sets the difficulty shared prefrences to easy
+        _soundManager.play(buttonPressSound);
         currentDifficulty.setText(R.string.default_difficulty);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong("clockTime", 20000).apply();

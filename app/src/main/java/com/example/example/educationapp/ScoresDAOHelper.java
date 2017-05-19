@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-public class ScoresDAOHelper extends SQLiteOpenHelper{
+class ScoresDAOHelper extends SQLiteOpenHelper{
     private static final int VERSION = 1;
     private Context context;
 

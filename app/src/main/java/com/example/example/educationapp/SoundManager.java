@@ -7,26 +7,22 @@ package com.example.example.educationapp;
 import android.content.Context;
 import android.media.SoundPool;
 
-public class SoundManager {
+class SoundManager {
     private SoundPool pool;
     private Context context;
 
-    public SoundManager(Context context) {
+    SoundManager(Context context) {
         this.context = context;
         SoundPool.Builder builder = new SoundPool.Builder();
         builder.setMaxStreams(10);
         pool = builder.build();
     }
 
-    public int addSound(int rescourceID) {
+    int addSound(int rescourceID) {
         return pool.load(context, rescourceID, 1);
     }
 
-    public void play(int soundID) {
+    void play(int soundID) {
         pool.play(soundID, 1, 1, 1, 0, 1);
-    }
-
-    public void loop(int soundID) {
-        pool.play(soundID, 1, 1, 1, 1, 1);
     }
 }
